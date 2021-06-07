@@ -1,0 +1,438 @@
+[
+  {
+    "Name": "Usables",
+    "itemComparers": [
+      {
+        "Name": "Society Gem of Dispelling",
+        "Type": 38727
+      },
+      {
+        "Name": "Celestial Hand Stronghold Portal Gem",
+        "Type": 38723
+      },
+      {
+        "Name": "Town Network Portal Gem",
+        "Type": 43020
+      },
+      {
+        "Name": "Yaraq Portal Gem",
+        "Type": 8984
+      },
+      {
+        "Name": "Viridian Rise Deru Portal Sending Gem",
+        "Type": 53450
+      },
+      {
+        "Name": "Frozen Valley Portal Gem",
+        "Type": 51372
+      },
+      {
+        "Name": "Celdiseth's Portal Gem",
+        "Type": 8974
+      },
+      {
+        "Name": "Blackmoor's Favor",
+        "Type": 31000
+      },
+      {
+        "Name": "Asheron's Lesser Benediction",
+        "Type": 34257
+      },
+      {
+        "Name": "Ust",
+        "Type": 20646
+      },
+      {
+        "Name": "Aetheria Mana Stone",
+        "Type": 42645
+      },
+      {
+        "Name": "Encapsulated Spirits",
+        "Type": 49485
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": 7
+      },
+      {
+        "Slot": 6
+      },
+      {
+        "Slot": 5
+      }
+    ]
+  },
+  {
+    "Name": "Components ",
+    "itemComparers": [
+      {
+        "Name": "Lead Scarab",
+        "Type": 691
+      },
+      {
+        "Name": "Iron Scarab",
+        "Type": 689
+      },
+      {
+        "Name": "Copper Scarab",
+        "Type": 686
+      },
+      {
+        "Name": "Silver Scarab",
+        "Type": 688
+      },
+      {
+        "Name": "Gold Scarab",
+        "Type": 687
+      },
+      {
+        "Name": "Pyreal Scarab",
+        "Type": 690
+      },
+      {
+        "Name": "Platinum Scarab",
+        "Type": 8897
+      },
+      {
+        "Name": "Mana Scarab",
+        "Type": 37155
+      },
+      {
+        "Name": "Diamond Scarab",
+        "Type": 7299
+      },
+      {
+        "Name": "Chorizite",
+        "Type": 7581
+      },
+      {
+        "Name": "Prismatic Taper",
+        "Type": 20631
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": 6
+      }
+    ]
+  },
+  {
+    "Name": "Currencies",
+    "itemComparers": [
+      {
+        "Name": "A'nekshay Token",
+        "Type": 44240
+      },
+      {
+        "Name": "Small Olthoi Venom Sac",
+        "Type": 36376
+      },
+      {
+        "Name": "Ornate Gear Marker",
+        "Type": 43142
+      },
+      {
+        "Name": "Ancient Mhoire Coin",
+        "Type": 35383
+      },
+      {
+        "Name": "Colosseum Coin",
+        "Type": 36518
+      },
+
+      {
+        "Name": "Promissory Note",
+        "Type": 43901
+      },
+
+      {
+        "Name": "Stipend",
+        "Type": 46423
+      },
+      {
+        "Name": "Celestial Hand Trade Token",
+        "Type": 38234
+      },
+      {
+        "Name": "Celestial Hand Commendation Ribbon",
+        "Type": 38228
+      },
+      {
+        "Name": "Volatile Pyreal",
+        "Type": 200401
+      },
+      {
+        "Name": "Glowing Volatile Pyreal",
+        "Type": 200403
+      },
+      {
+        "Name": "Trade Note (250,000)",
+        "Type": 20630
+      },
+      {
+        "Name": "Pyreal",
+        "Type": 273
+      },
+      {
+        "Name": "Infused Amber Shard",
+        "Type": 52968
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": 7
+      },
+      {
+        "Slot": 6
+      },
+      {
+        "Slot": 5
+      }
+    ]
+  },
+  {
+    "Name": "Quest Turn-ins",
+    "itemComparers": [
+      {
+        "Name": "Lucky Platinum Letter",
+        "Id": -2140790823,
+        "Type": 200300
+      },
+      {
+        "Name": "Letter from Mouf",
+        "Type": 46021
+      },
+      {
+        "Name": "Shard of the Curator of Torment's Mask",
+        "Type": 52008
+      },
+      {
+        "Name": "Shard of the Black Spear",
+        "Type": 33691
+      },
+      {
+        "Name": "Snow Tusker Leader Tusk",
+        "Type": 51351
+      },
+      {
+        "Name": "Shattered Master Bloodstone Shard",
+        "Type": 43826
+      },
+      {
+        "Name": "Shard of the Abyssal Totem",
+        "Type": 33883
+      },
+      {
+        "Name": "Engraved Ashen Key",
+        "Type": 43032
+      },
+      {
+        "Name": "Ring of Remembrance",
+        "Type": 38081
+      },
+      {
+        "Name": "Shard of the Apostate Grand Director's Broken Mask",
+        "Type": 43215
+      },
+      {
+        "Name": "K'nath Core",
+        "Type": 87213
+      },
+      {
+        "Name": "Essence of Dravann",
+        "Type": 45858
+      },
+      {
+        "Name": "Crimson Scarab",
+        "Type": 72025
+      },
+      {
+        "Name": "Arbitrator's Augmentation Token",
+        "Type": 35808
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": 0
+      },
+      {
+        "Slot": 1
+      },
+      {
+        "Slot": 2
+      },
+      {
+        "Slot": 3
+      },
+      {
+        "Slot": 4
+      },
+      {
+        "Slot": 5
+      },
+      {
+        "Slot": 6
+      },
+      {
+        "Slot": 7
+      }
+    ]
+  },
+  {
+    "Name": "Permanent Legendary Keys",
+    "itemComparers": [
+      {
+        "Name": "Durable Legendary Key",
+        "Type": 51954
+      },
+      {
+        "Name": "Aged Legendary Key",
+        "Type": 48746
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": 0
+      },
+      {
+        "Slot": 1
+      },
+      {
+        "Slot": 2
+      },
+      {
+        "Slot": 3
+      },
+      {
+        "Slot": 4
+      },
+      {
+        "Slot": 5
+      },
+      {
+        "Slot": 6
+      },
+      {
+        "Slot": 7
+      }
+    ]
+  },
+  {
+    "Name": "Equipment",
+    "itemComparers": [
+      {
+        "Name": "Greater Deadly Armor Piercing Arrow",
+        "Type": 44376
+      },
+      {
+        "Name": "Greater Deadly Blunt Arrow",
+        "Type": 44368
+      },
+      {
+        "Name": "Greater Deadly Frog Crotch Arrow",
+        "Type": 44383
+      },
+      {
+        "Name": "Olthoi Acid Arrow",
+        "Type": 36389
+      },
+      {
+        "Name": "Burning Sands Arrow",
+        "Type": 44212
+      },
+      {
+        "Name": "Spectral Chill Arrow",
+        "Type": 35489
+      },
+      {
+        "Name": "Raider Lightning Arrow",
+        "Type": 38780
+      },
+      {
+        "Name": "Ultimate Singularity Bow",
+        "Id": -2140106871
+      },
+      {
+        "Name": "Royal Runed War Bow",
+        "Id": -2142891532
+      },
+      {
+        "Name": "Soul Bound Bow",
+        "Id": -2140976405
+      },
+      {
+        "Name": "Blunt Bow",
+        "Id": -2147284364
+      },
+      {
+        "Name": "Fire Compound Bow",
+        "Id": -2147252598
+      },
+      {
+        "Name": "Composite Bow",
+        "Id": -2145683191
+      },
+      {
+        "Name": "Black Spawn Bow",
+        "Id": -2147074685
+      },
+      {
+        "Name": "Branith's Staff",
+        "Id": -2141029572
+      },
+      {
+        "Name": "Life-attuned Rynthid Tentacle Wand",
+        "Id": -2146876212
+      },
+      {
+        "Name": "Focusing Stone",
+        "Type": 8904
+      },
+      {
+        "Name": "Acid Phyntos Swarm Essence",
+        "Id": -2138484811
+      },
+      {
+        "Name": "Fire Phyntos Swarm Essence",
+        "Id": -2138750131
+      },
+      {
+        "Name": "Frost Phyntos Swarm Essence",
+        "Id": -2139906100
+      },
+      {
+        "Name": "Lightning Phyntos Swarm Essence",
+        "Id": -2145185553
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1
+      }
+    ]
+  },
+  {
+    "Name": "Junk",
+    "itemComparers": [
+      {
+        "Name": "Translated Message Shard",
+        "Type": 51301
+      },
+      {
+        "Name": "Amelia's Gargoyle Amulet",
+        "Type": 35931
+      },
+      {
+        "Name": "Adventurer's Token",
+        "Type": 39984
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1,
+        "Bottom": true
+      }
+    ]
+  }
+]

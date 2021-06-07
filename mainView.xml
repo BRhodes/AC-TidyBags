@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<view icon="28633" title="Tidy Bags" width="800" height="500">
+  <control progid="DecalControls.Notebook" name="nbMain">
+
+    <page label="Quests">
+      <control progid="DecalControls.FixedLayout" clipped="" height="450">
+        <control progid="DecalControls.StaticText" name="QuestsListFilterLabel" left="1" top="4" width="45" height="16" text="Search:"/>
+        <control progid="DecalControls.Edit" name="QuestsListFilter" left="48" top="4" width="176" height="16" imageportalsrc="4726" text=""/>
+        <control progid="DecalControls.Notebook" name="QuestListNotebook" left="0" top="20" width="700" height="310">
+
+          <!-- Favorites -->
+          <page label="Favorites">
+            <control progid="DecalControls.FixedLayout" clipped="">
+              <control progid="DecalControls.StaticText" name="QuestsListName" left="26" top="4" width="240" height="17" text="Quest"/>
+              <control progid="DecalControls.StaticText" name="QuestsListRepeatTime" left="273" top="4" width="100" height="17" justify="Right" text="Next Available"/>
+              <control progid="DecalControls.StaticText" name="QuestsListSolveCount" left="380" top="4" width="50" height="17" justify="Right" text="Xp"/>
+              <control progid="DecalControls.StaticText" name="QuestsListSolveCount" left="437" top="4" width="40" height="17" justify="Right" text="Lum"/>
+              <control progid="DecalControls.StaticText" name="QuestsListSolveCount" left="484" top="4" width="40" height="17" justify="Right" text="Keys"/>
+              <control progid="DecalControls.StaticText" name="QuestsListSolveCount" left="541" top="4" width="39" height="17" justify="Center" text="Priority"/>
+              <control progid="DecalControls.List" name="FavoriteList" left="0" top="20" width="660" height="240">
+                <column progid="DecalControls.PushButton" name="Play" fixedwidth="16" text="" />
+                <column progid="DecalControls.TextColumn" name="QuestName" fixedwidth="240" text="" />
+                <column progid="DecalControls.TextColumn" name="NextAvailable" justify="Right" fixedwidth="100"/>
+                <column progid="DecalControls.TextColumn" name="XpReward" justify="Right" fixedwidth="50"/>
+                <column progid="DecalControls.TextColumn" name="LumReward" justify="Right" fixedwidth="40"/>
+                <column progid="DecalControls.TextColumn" name="KeyReward" justify="Right" fixedwidth="40"/>
+                <column progid="DecalControls.TextColumn" name="Space" justify="Right" fixedwidth="3"/>
+                <column progid="DecalControls.PushButton" name="PriorityUp" fixedwidth="16"/>
+                <column progid="DecalControls.PushButton" name="PriorityDown" fixedwidth="16"/>
+                <column progid="DecalControls.CheckBox" name="Favorite" fixedwidth="16"/>
+              </control>
+              <control progid="DecalControls.StaticText" name="QuestFavoritesShowCompletedText" left="8" top="260" width="42" height="20" justify="Left" text="Show?"/>
+              <control progid="DecalControls.CheckBox" name="QuestFavoritesShowCompleted" left="50" top="260" width="16" height="16"/>
+            </control>
+          </page>
+
+          <!-- All Quests-->
+          <page label="All Quests">
+            <control progid="DecalControls.FixedLayout" clipped="">
+              <control progid="DecalControls.StaticText" name="QuestsListName" left="26" top="4" width="240" height="17" text="Quest"/>
+              <control progid="DecalControls.StaticText" name="QuestsListNextAvailable" left="273" top="4" width="100" height="17" justify="Right" text="Next Available"/>
+              <control progid="DecalControls.StaticText" name="QuestsListLevelReq" left="380" top="4" width="40" height="17" justify="Right" text="Level"/>
+              <control progid="DecalControls.StaticText" name="QuestsListXp" left="427" top="4" width="50" height="17" justify="Right" text="Xp"/>
+              <control progid="DecalControls.StaticText" name="QuestsListLuminance" left="484" top="4" width="40" height="17" justify="Right" text="Lum"/>
+              <control progid="DecalControls.StaticText" name="QuestsListKeys" left="541" top="4" width="40" height="17" justify="Right" text="Keys"/>
+              <control progid="DecalControls.StaticText" name="QuestsListFavorite" left="588" top="4" width="16" height="17" justify="Center" text="F?"/>
+              <control progid="DecalControls.StaticText" name="QuestsListAccountFavorite" left="608" top="4" width="16" height="17" justify="Center" text="A?"/>
+              <control progid="DecalControls.List" name="QuestList" left="0" top="20" width="660" height="240">
+                <column progid="DecalControls.PushButton" name="Play" fixedwidth="16" text="" />
+                <column progid="DecalControls.TextColumn" name="QuestName" fixedwidth="240" text="" />
+                <column progid="DecalControls.TextColumn" name="NextAvailable" justify="Right" fixedwidth="100"/>
+                <column progid="DecalControls.TextColumn" name="LevelRequirement" justify="Right" fixedwidth="40"/>
+                <column progid="DecalControls.TextColumn" name="XpReward" justify="Right" fixedwidth="50"/>
+                <column progid="DecalControls.TextColumn" name="LumReward" justify="Right" fixedwidth="40"/>
+                <column progid="DecalControls.TextColumn" name="KeyReward" justify="Right" fixedwidth="40"/>
+                <column progid="DecalControls.TextColumn" name="Space" justify="Right" fixedwidth="3"/>
+                <column progid="DecalControls.CheckBox" name="Favorite" fixedwidth="16"/>
+                <column progid="DecalControls.CheckBox" name="Account" fixedwidth="16"/>
+              </control>
+            </control>
+          </page>
+          <page label="Edit Quest">
+            <control progid="DecalControls.FixedLayout" clipped="">
+              <control progid="DecalControls.StaticText" name="QuestForEdit" left="4" top="4" width="200" height="16" justify="Center" text="New"/>
+              <control progid="DecalControls.StaticText" left="4" top="24" width="71" height="16" text="Name:"/>
+              <control progid="DecalControls.Edit" name="EditQuestName" left="75" top="24" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="44" width="71" height="16" text="LevelRequirement:"/>
+              <control progid="DecalControls.Edit" name="EditQuestLevelRequirement" left="75" top="44" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="64" width="71" height="16" text="Description:"/>
+              <control progid="DecalControls.Edit" name="EditQuestDescription" left="75" top="64" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="84" width="71" height="16" text="Notes:"/>
+              <control progid="DecalControls.Edit" name="EditQuestNotes" left="75" top="84" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="104" width="71" height="16" text="QuestFlags:"/>
+              <control progid="DecalControls.Edit" name="EditQuestQuestFlags" left="75" top="104" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="124" width="71" height="16" text="Route:"/>
+              <control progid="DecalControls.Edit" name="EditQuestRoute" left="75" top="124" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="144" width="71" height="16" text="Priority:"/>
+              <control progid="DecalControls.Edit" name="EditQuestPriority" left="75" top="144" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="164" width="71" height="16" text="XpReward:"/>
+              <control progid="DecalControls.Edit" name="EditQuestXpReward" left="75" top="164" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="184" width="71" height="16" text="LuminanceReward:"/>
+              <control progid="DecalControls.Edit" name="EditQuestLuminanceReward" left="75" top="184" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.StaticText" left="4" top="204" width="71" height="16" text="KeyReward:"/>
+              <control progid="DecalControls.Edit" name="EditQuestKeyReward" left="75" top="204" width="200" height="16" imageportalsrc="4726" text=""/>
+              <control progid="DecalControls.PushButton" name="EditQuestCancel" left="150" top="224" width ="55" height="20" text="Cancel"/>
+              <control progid="DecalControls.PushButton" name="EditQuestSave" left="215" top="224" width ="55" height="20" text="Save"/>
+            </control>
+          </page>
+        </control>
+        <control progid="DecalControls.PushButton" name="StartStop" left="8" top="336" width="110" height="20" text="Start/Stop"/>
+        <control progid="DecalControls.StaticText" name="QuestListRefreshLoading" left="8" top="336" width="110" height="20" justify="Center" text="Please Wait..."/>
+        <control progid="DecalControls.PushButton" name="Step" left="150" top="336" width="110" height="20" text="Step"/>
+        <control progid="DecalControls.PushButton" name="ScramSort" left="292" top="336" width="110" height="20" text="Scramble/Sort"/>
+      </control>
+    </page>
+    <page label="Debug">
+      <control progid="DecalControls.PushButton" name="UseSelectedItem" left="10" top="20" width="90" height="20" text="Load Quest List" />
+    </page>
+  </control>
+</view>
