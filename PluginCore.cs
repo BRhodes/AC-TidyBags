@@ -24,18 +24,25 @@ namespace TidyBags
     [FriendlyName("TidyBags")]
     public class PluginCore : PluginBase
     {
-        HudView questView;
-        double actionPerSecond = 2.5;
-        long lastRun = 0;
+        double TimeOutPeriod = 1;
+        double delayAfterItemMove = 100;
+        bool startedWork = false;
+        double delayBeforeStartingWork = 15;
+        double movesPerSecond = 8;
+
+        public long LastHashChange { get; private set; }
+
+        long LastHash = 0;
+        long LastStep = 0;
         bool sort = true;
-        bool run = false;
+        bool run = true;
+        bool running = false;
 
         // Recurring Events
         Timer AllQuestRedrawTimer { get; set; }
-        Timer AutoSaveTimer { get; set; }
 
         // Views
-        
+
         // Data Repositories
         /// <summary>
         /// This is called when the plugin is started up. This happens only once.
@@ -51,13 +58,13 @@ namespace TidyBags
                 //Initialize the view.
                 MVWireupHelper.WireupStart(this, Host);
                 var views = HudView.GetAllViews();
-                foreach (var view in views)
-                {
-                    if (view.Title == "Quest Helper")
-                    {
-                        questView = view;
-                    }
-                }
+                //foreach (var view in views)
+                //{
+                //    if (view.Title == "Quest Helper")
+                //    {
+                //        //questView = view;
+                //    }
+                //}
 
             }
             catch (Exception ex) { Util.LogError(ex); }
@@ -68,7 +75,7 @@ namespace TidyBags
             var appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var preferencesFilePath = $"{appdata}\\VehnPlugins\\TidyBags\\QuestPreferences\\{Core.CharacterFilter.Server}\\{Core.CharacterFilter.AccountName}\\{Core.CharacterFilter.Name}.json";
             //_playerData = _playerDataRepository.Load(Core.CharacterFilter.Server, Core.CharacterFilter.AccountName, Core.CharacterFilter.Name);
-            
+
 
             if (!File.Exists(preferencesFilePath))
             {
@@ -138,12 +145,45 @@ namespace TidyBags
 
         private void DoWork(object sender, EventArgs e)
         {
-            var actionSpeed = TimeSpan.FromSeconds(1.0 / actionPerSecond).Ticks;
-            if (run && DateTime.UtcNow.Ticks > lastRun + actionSpeed)
+            var stepCooldown = TimeSpan.FromSeconds(1.0/movesPerSecond).Ticks;
+            if (run)
             {
-                lastRun = DateTime.UtcNow.Ticks;
-                Step();
+                if (!running)
+                {
+                    var hash = ComputeInventoryHash();
+                    if (hash != LastHash)
+                    {
+                        LastHashChange = DateTime.UtcNow.Ticks;
+                        LastHash = hash;
+                    }
+                    if (LastHashChange < DateTime.UtcNow.Ticks - TimeSpan.FromSeconds(delayBeforeStartingWork).Ticks)
+                    {
+                        running = true;
+                    }
+                }
+                else if (running && LastStep + stepCooldown < DateTime.UtcNow.Ticks)
+                {
+                    LastStep = DateTime.UtcNow.Ticks;
+                    var action = Step();
+                    if (action == null)
+                    {
+                        LastHash = ComputeInventoryHash();
+                        LastHashChange = DateTime.MaxValue.Ticks;
+                        running = false;
+                    }
+                }
             }
+        }
+
+        private long ComputeInventoryHash()
+        {
+            long hash = 0;
+            foreach (var wo in Core.WorldFilter.GetInventory().OrderBy(x => x.Container).ThenBy(x => x.Values(LongValueKey.Slot, -1)))
+            {
+                hash = unchecked(hash * 17 + wo.Id);
+            }
+
+            return hash;
         }
 
         [BaseEvent("Logoff", "CharacterFilter")]
@@ -184,6 +224,20 @@ namespace TidyBags
             Step();
         }
 
+        [MVControlEvent("SpeedUp", "Click")]
+        void Faster(object sender, MVControlEventArgs e)
+        {
+            movesPerSecond *= 1.1;
+            Util.WriteToChat($"Speed: {movesPerSecond}");
+        }
+
+        [MVControlEvent("SpeedDown", "Click")]
+        void Slower(object sender, MVControlEventArgs e)
+        {
+            movesPerSecond /= 1.1;
+            Util.WriteToChat($"Speed: {movesPerSecond}");
+        }
+
         [MVControlEvent("ScramSort", "Click")]
         void QuestTick_Click(object sender, MVControlEventArgs e)
         {
@@ -200,13 +254,13 @@ namespace TidyBags
             Util.WriteToChat($"Set to {type}");
         }
 
-        void Step()
+        MoveItemAction Step()
         {
-            if (sort) SortInv();
-            else Scramble();
+            if (sort) return SortInv();
+            else return Scramble();
         }
 
-        public void SortInv()
+        public MoveItemAction SortInv()
         {
             var core = CoreManager.Current;
             var inventory = core.WorldFilter.GetByOwner(core.CharacterFilter.Id).Select(x => new Item(x));
@@ -215,9 +269,10 @@ namespace TidyBags
 
             if (action != null)
                 Host.Actions.MoveItem(action.ObjectId, action.PackId, action.Slot, true);
+            return action;
         }
 
-        void Scramble()
+        MoveItemAction Scramble()
         {
             var random = new Random();
             var core = CoreManager.Current;
@@ -225,7 +280,16 @@ namespace TidyBags
                 .OrderBy(x => random.Next())
                 .Where(x => x.ObjectClass != ObjectClass.Container && x.Values(LongValueKey.Slot, -1) != -1)
                 .First();
-            Host.Actions.MoveItem(item.Id, core.CharacterFilter.Id, 0, false);
+
+            var action = new MoveItemAction()
+            {
+                ObjectId = item.Id,
+                PackId = core.CharacterFilter.Id,
+                Slot = 0
+            };
+
+            Host.Actions.MoveItem(action.ObjectId, action.PackId, action.Slot, false);
+            return action;
         }
     }
 }

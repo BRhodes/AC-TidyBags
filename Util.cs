@@ -125,39 +125,40 @@ namespace TidyBags
                 CoreManager.Current.Actions.InvokeChatParser(cmd);
         }
 
-        static public IEnumerable<Item> LongestIncreasingSubsequence(List<Item> list)
+        public static TValue GetValueOrDefault<TKey, TValue>
+    (this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default) =>
+    dictionary.TryGetValue(key, out var ret) ? ret : defaultValue;
+
+        static public List<Item> LongestIncreasingSubsequence<Item>(IEnumerable<Item> items, Func<Item, int> position)
         {
-            Dictionary<Item, int> position = new Dictionary<Item, int>();
-
-            for (int i = 0; i < list.Count; i++)
-                position[list[i]] = i;
-
             var history = new List<List<Item>>();
-            foreach (var item in list.OrderBy(x => x.Slot))
+            foreach (var item in items)
             {
                 if (history.Count == 0)
                 {
-                    var x = new List<Item>();
-                    x.Add(item);
-                    history.Add(x);
-                } else
+                    history.Add(new List<Item> { item });
+                }
+                else if (position(item) < position(history[0][0]))
                 {
-                    if (position[history.Last().Last()] < position[item])
-                    {
-                        var x = history.Last().ToList();
-                        x.Add(item);
-                        history.Add(x);
-                    }
-                    else
-                    {
-                        foreach (var story in history.OrderBy(x => x.Count))
+                    history[0][0] = item;
+                }
+                else
+                {
+                    for (int i = history.Count - 1; i >= 0; i--) {
+                        var story = history[i];
+                        if (position(story.Last()) > position(item))
+                            continue;
+
+                        var newStory = story.ToList();
+                        newStory.Add(item);
+
+                        if (i + 1 < history.Count)
                         {
-                            if (position[story.Last()] > position[item])
-                            {
-                                story[story.Count - 1] = item;
-                                break;
-                            }
+                            history.RemoveAt(i + 1);
                         }
+
+                        history.Insert(i + 1, newStory);
+                        break;
                     }
                 }
             }

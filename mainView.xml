@@ -88,9 +88,10 @@
           </page>
         </control>
         <control progid="DecalControls.PushButton" name="StartStop" left="8" top="336" width="110" height="20" text="Start/Stop"/>
-        <control progid="DecalControls.StaticText" name="QuestListRefreshLoading" left="8" top="336" width="110" height="20" justify="Center" text="Please Wait..."/>
         <control progid="DecalControls.PushButton" name="Step" left="150" top="336" width="110" height="20" text="Step"/>
         <control progid="DecalControls.PushButton" name="ScramSort" left="292" top="336" width="110" height="20" text="Scramble/Sort"/>
+        <control progid="DecalControls.PushButton" name="SpeedUp" left="150" top="366" width="110" height="20" text="Fast"/>
+        <control progid="DecalControls.PushButton" name="SpeedDown" left="292" top="366" width="110" height="20" text="Slow"/>
       </control>
     </page>
     <page label="Debug">
