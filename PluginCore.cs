@@ -1,16 +1,12 @@
 ﻿using Decal.Adapter;
 using Decal.Adapter.Wrappers;
 using MyClasses.MetaViewWrappers;
-using Newtonsoft.Json;
-using TidyBags.Models;
-using TidyBags.View;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Timers;
-using VirindiViewService;
-using VirindiViewService.Controls;
 using System.Linq;
+using System.Timers;
+using TidyBags.Models;
+using VirindiViewService;
 
 namespace TidyBags
 {
@@ -24,26 +20,16 @@ namespace TidyBags
     [FriendlyName("TidyBags")]
     public class PluginCore : PluginBase
     {
-        double TimeOutPeriod = 1;
-        double delayAfterItemMove = 100;
-        bool startedWork = false;
-        double delayBeforeStartingWork = 15;
+        double delayBeforeStartingWork = 3;
         double movesPerSecond = 8;
 
         public long LastHashChange { get; private set; }
 
-        long LastHash = 0;
-        long LastStep = 0;
-        bool sort = true;
-        bool run = true;
-        bool running = false;
+        long LastHash { get; set; } = 0;
+        long LastStep { get; set; } = 0;
+        bool Run { get; set; } = true;
+        bool Running { get; set; } = false;
 
-        // Recurring Events
-        Timer AllQuestRedrawTimer { get; set; }
-
-        // Views
-
-        // Data Repositories
         /// <summary>
         /// This is called when the plugin is started up. This happens only once.
         /// </summary>
@@ -145,12 +131,12 @@ namespace TidyBags
 
         private void DoWork(object sender, EventArgs e)
         {
-            var stepCooldown = TimeSpan.FromSeconds(1.0/movesPerSecond).Ticks;
-            if (run)
+            var stepCooldown = TimeSpan.FromSeconds(1.0 / movesPerSecond).Ticks;
+            if (Run || Running)
             {
-                if (!running)
+                if (!Running)
                 {
-                    var hash = ComputeInventoryHash();
+                    var hash = Util.ComputeInventoryHash(Core.WorldFilter.GetInventory());
                     if (hash != LastHash)
                     {
                         LastHashChange = DateTime.UtcNow.Ticks;
@@ -158,40 +144,29 @@ namespace TidyBags
                     }
                     if (LastHashChange < DateTime.UtcNow.Ticks - TimeSpan.FromSeconds(delayBeforeStartingWork).Ticks)
                     {
-                        running = true;
+                        Running = true;
                     }
                 }
-                else if (running && LastStep + stepCooldown < DateTime.UtcNow.Ticks)
+                else if (Running && LastStep + stepCooldown < DateTime.UtcNow.Ticks)
                 {
                     LastStep = DateTime.UtcNow.Ticks;
                     var action = Step();
                     if (action == null)
                     {
-                        LastHash = ComputeInventoryHash();
+                        LastHash = Util.ComputeInventoryHash(Core.WorldFilter.GetInventory());
                         LastHashChange = DateTime.MaxValue.Ticks;
-                        running = false;
+                        Running = false;
                     }
                 }
             }
         }
 
-        private long ComputeInventoryHash()
-        {
-            long hash = 0;
-            foreach (var wo in Core.WorldFilter.GetInventory().OrderBy(x => x.Container).ThenBy(x => x.Values(LongValueKey.Slot, -1)))
-            {
-                hash = unchecked(hash * 17 + wo.Id);
-            }
-
-            return hash;
-        }
 
         [BaseEvent("Logoff", "CharacterFilter")]
         private void CharacterFilter_Logoff(object sender, LogoffEventArgs e)
         {
             try
             {
-                AllQuestRedrawTimer.Stop();
                 Core.RenderFrame -= DoWork;
                 // Unsubscribe to events here, but know that this event is not gauranteed to happen. I've never seen it not fire though.
                 // This is not the proper place to free up resources, but... its the easy way. It's not proper because of above statement.
@@ -213,8 +188,8 @@ namespace TidyBags
         [MVControlEvent("StartStop", "Click")]
         void QuestRefresh_Click(object sender, MVControlEventArgs e)
         {
-            run = !run;
-            var type = run ? "Started" : "Stopped";
+            Run = !Run;
+            var type = Run ? "Started" : "Stopped";
             Util.WriteToChat($"Execution {type}");
         }
 
@@ -227,40 +202,19 @@ namespace TidyBags
         [MVControlEvent("SpeedUp", "Click")]
         void Faster(object sender, MVControlEventArgs e)
         {
-            movesPerSecond *= 1.1;
-            Util.WriteToChat($"Speed: {movesPerSecond}");
         }
 
         [MVControlEvent("SpeedDown", "Click")]
         void Slower(object sender, MVControlEventArgs e)
         {
-            movesPerSecond /= 1.1;
-            Util.WriteToChat($"Speed: {movesPerSecond}");
         }
 
         [MVControlEvent("ScramSort", "Click")]
         void QuestTick_Click(object sender, MVControlEventArgs e)
         {
-            sort = !sort;
-            var type = sort ? "Sort" : "Scramble";
-
-            //var core = Decal.Adapter.CoreManager.Current;
-            //var y = core.WorldFilter.GetByOwner(core.CharacterFilter.Id);
-            //var pretty = y.Select(x => $"{x.Name} -- {x.Id} -- {x.Type} -- {x.Container} -- {x.Values(LongValueKey.Slot, -1)}");
-
-            //var z = pretty.Aggregate((total, next) => $"{total},\n{next}");
-            //Util.LogData(JsonConvert.SerializeObject(y.Select(x => new Item(x)), Formatting.Indented));
-
-            Util.WriteToChat($"Set to {type}");
         }
 
         MoveItemAction Step()
-        {
-            if (sort) return SortInv();
-            else return Scramble();
-        }
-
-        public MoveItemAction SortInv()
         {
             var core = CoreManager.Current;
             var inventory = core.WorldFilter.GetByOwner(core.CharacterFilter.Id).Select(x => new Item(x));
@@ -269,26 +223,7 @@ namespace TidyBags
 
             if (action != null)
                 Host.Actions.MoveItem(action.ObjectId, action.PackId, action.Slot, true);
-            return action;
-        }
 
-        MoveItemAction Scramble()
-        {
-            var random = new Random();
-            var core = CoreManager.Current;
-            var item = core.WorldFilter.GetByContainer(core.CharacterFilter.Id)
-                .OrderBy(x => random.Next())
-                .Where(x => x.ObjectClass != ObjectClass.Container && x.Values(LongValueKey.Slot, -1) != -1)
-                .First();
-
-            var action = new MoveItemAction()
-            {
-                ObjectId = item.Id,
-                PackId = core.CharacterFilter.Id,
-                Slot = 0
-            };
-
-            Host.Actions.MoveItem(action.ObjectId, action.PackId, action.Slot, false);
             return action;
         }
     }

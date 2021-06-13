@@ -49,6 +49,14 @@
       {
         "Name": "Encapsulated Spirits",
         "Type": 49485
+      },
+      {
+        "Name": "Healing Kit 1",
+        "Type": 22446
+      },
+      {
+        "Name": "Healing Kit 2",
+        "Type": 22445
       }
     ],
     "destinations": [
@@ -195,8 +203,15 @@
     "Name": "Quest Turn-ins",
     "itemComparers": [
       {
+        "Name": "Lesser Gem of Luminance",
+        "Type": 46454
+      },
+      {
+        "Name": "Augmentation Gem",
+        "Type": 29295
+      },
+      {
         "Name": "Lucky Platinum Letter",
-        "Id": -2140790823,
         "Type": 200300
       },
       {
@@ -280,7 +295,7 @@
     ]
   },
   {
-    "Name": "Permanent Legendary Keys",
+    "Name": "Pack Cram",
     "itemComparers": [
       {
         "Name": "Durable Legendary Key",
@@ -289,6 +304,14 @@
       {
         "Name": "Aged Legendary Key",
         "Type": 48746
+      },
+      {
+        "Name": "Attribute Reset Certificate",
+        "Type": 46421
+      },
+      {
+        "Name": "Salvage",
+        "Regex": "Salvage \\(.?.\\)"
       }
     ],
     "destinations": [
@@ -315,6 +338,10 @@
       },
       {
         "Slot": 7
+      },
+      {
+        "Slot": -1,
+        "Bottom": true
       }
     ]
   },
@@ -399,7 +426,7 @@
       },
       {
         "Name": "Frost Phyntos Swarm Essence",
-        "Id": -2139906100
+        "Id": -2139022359
       },
       {
         "Name": "Lightning Phyntos Swarm Essence",
@@ -413,8 +440,60 @@
     ]
   },
   {
+    "Name": "Healing Kits",
+    "itemComparers": [
+      {
+        "Name": "Plentiful Healing Kit",
+        "Type": 22449
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1,
+        "Bottom": true
+      }
+    ]
+  },
+  {
+    "Name": "ForeverInventory",
+    "itemComparers": [
+      {
+        "Name": "Legendary Key",
+        "Regex": ".*Legendary Key.*"
+      },
+      {
+        "Name": "Mana Stone",
+        "Type": 27328
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1,
+        "Bottom": true
+      }
+    ]
+  },
+  {
+    "Name": "Keys",
+    "itemComparers": [
+      {
+        "Name": "Legendary Key",
+        "Regex": ".*Key.*"
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1
+      }
+    ]
+  },
+  {
     "Name": "Junk",
     "itemComparers": [
+      {
+        "Name": "Casting Stone",
+        "Type": 51899
+      },
       {
         "Name": "Translated Message Shard",
         "Type": 51301
@@ -426,6 +505,37 @@
       {
         "Name": "Adventurer's Token",
         "Type": 39984
+      }
+    ],
+    "destinations": [
+      {
+        "Slot": -1,
+        "Bottom": true
+      }
+    ]
+  },
+  {
+    "Name": "Misc Quest",
+    "itemComparers": [
+      {
+        "Name": "Scroll for Raksaa",
+        "Type": 51922
+      },
+      {
+        "Name": "Tusker Blood",
+        "Type": 43742
+      },
+      {
+        "Name": "Arch Paper",
+        "Type": 38798
+      },
+      {
+        "Name": "Aetherium Gear",
+        "Type": 42114
+      },
+      {
+        "Name": "Gear Knight Parts",
+        "Type": 51266
       }
     ],
     "destinations": [

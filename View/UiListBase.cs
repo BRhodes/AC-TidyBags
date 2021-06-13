@@ -62,22 +62,22 @@ namespace TidyBags.View
                 }
                 else if (comp < 0)
                 {
-                    if (old.Count > i)
-                        Util.WriteToChat($"Adding: {filteredItems[i]} in front of {old[i]}");
-                    else
-                        Util.WriteToChat($"Adding: {filteredItems[i]}");
+                    //if (old.Count > i)
+                    //    Util.WriteToChat($"Adding: {filteredItems[i]} in front of {old[i]}");
+                    //else
+                    //    Util.WriteToChat($"Adding: {filteredItems[i]}");
                     AddItemAt(i, filteredItems[i]);
                 }
                 else if (comp > 0)
                 {
-                    Util.WriteToChat($"Removing: {old[i]}");
+                    //Util.WriteToChat($"Removing: {old[i]}");
                     RemoveItem(i);
                     i--;
                 }
             }
             while (old.Count > filteredItems.Count)
             {
-                Util.WriteToChat($"Removing excess: {old[filteredItems.Count]}");
+                //Util.WriteToChat($"Removing excess: {old[filteredItems.Count]}");
                 RemoveItem(filteredItems.Count);
             }
         }
@@ -93,7 +93,6 @@ namespace TidyBags.View
 
         abstract protected void SetupRow(HudList.HudListRowAccessor row, ViewRow viewRow);
         abstract protected ViewRow CreateViewRow(Item item);
-
     }
 
     internal interface IEmbedded<T>

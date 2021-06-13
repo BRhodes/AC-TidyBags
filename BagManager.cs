@@ -13,7 +13,7 @@ namespace TidyBags
             // Get Finalized items
             var vi = new VirtualInventory(items.Where(x => x.ContainerSize > 0).Select(x => new Pack(x.Id, x.Slot, x.ContainerSize)).ToList(), characterId);
 
-            var unsortedItems = items.Where(x => x.Slot != -1 && x.ContainerSize == 0);
+            var unsortedItems = items.Where(x => x.Slot != -1 && x.ContainerSize == 0 && !x.Name.Contains("Foci"));
 
             var overflow = new List<Item>();
             // for each filter group
@@ -27,7 +27,8 @@ namespace TidyBags
                     var placed = false;
                     foreach (var destination in filter.destinations)
                     {
-                        var pack = vi.Packs.Single(x => destination.Slot == x.Slot);
+                        var pack = vi.Packs.SingleOrDefault(x => destination.Slot == x.Slot);
+                        if (pack == null) continue;
 
                         if (pack.AddItem(item, destination.Bottom))
                         {
@@ -57,7 +58,8 @@ namespace TidyBags
 
 
             var defaultPack = vi.Packs.Single(x => x.Slot == -1);
-            foreach (var item in unsortedItems.OrderBy(x => x.Type).ThenBy(x => x.Id))
+            //foreach (var item in unsortedItems.OrderBy(x => vi.Packs.Single(y => y.Id == x.Container)).ThenBy(x => x.Slot))
+            foreach (var item in unsortedItems.OrderBy(x => x.Name).ThenBy(x => x.Type))
             {
                 if (!defaultPack.AddItem(item, false))
                 {
@@ -88,6 +90,7 @@ namespace TidyBags
             // Exterior sort ///////////////////////////////////////////////////////////////////////////////////
 
             var availablePacks = vi.Packs.Where(x => x.Size > finalizedItems.Count(y => y.Container == x.Id)).Select(x => x.Id);
+            if (availablePacks.Count() == 0) return null;
             var sortabledItems = finalizedItems.Where(x => availablePacks.Contains(x.DestinationPack) && x.DestinationPack != x.Container);
             var pendingDeliveriesByPack = finalizedItems
                 .GroupBy(x => x.DestinationPack)
@@ -115,40 +118,6 @@ namespace TidyBags
                 };
             }
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-            //var unordered_Item = vi.Packs.SelectMany(x => x.Items).FirstOrDefault(x => x.;
-
-
-
-            // di
-            //            Decal.Adapter.CoreManager.Current.Actions.MoveItem()
-            //var core = Decal.Adapter.CoreManager.Current;
-            //var i = 0;
-            //var misplacedDistance = 0;
-            //var placePosition = -1;
-            //WorldObject misplacedItem = null;
-            //var items = core.WorldFilter.GetByContainer(core.CharacterFilter.Id).OrderBy(x => x.Values(LongValueKey.Slot, -1)).Where(x => x.ObjectClass != ObjectClass.Container && x.Values(LongValueKey.Slot, -1) != -1);
-            //var sortedItems = items.Select(x => new KeyValuePair<int, WorldObject>(i++, x)).OrderBy(x => x.Value.Name).ThenBy(x => x.Value.Id).ToList();
-
-            //for (int x = 0; x < sortedItems.Count; x++)
-            //{
-            //    if (Math.Abs(sortedItems[x].Value.Values(LongValueKey.Slot) - x) > misplacedDistance)
-            //    {
-            //        misplacedDistance = Math.Abs(sortedItea[x].Value.Values(LongValueKey.Slot) - x);
-            //        misplacedItem = sortedItems[x].Value;
-            //        placePosition = x;
-            //    }
-            //}
-
-            //if (misplacedItem != null)
-            //    Host.Actions.MoveItem(misplacedItem.Id, core.CharacterFilter.Id, placePosition, false);
-
-            //Util.WriteToChat("Nothing to move!");
             return null;
         }
 

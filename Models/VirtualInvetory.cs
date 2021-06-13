@@ -1,7 +1,4 @@
-﻿using Decal.Adapter.Wrappers;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -9,9 +6,10 @@ namespace TidyBags.Models
 {
     class VirtualInventory
     {
-        public VirtualInventory(List<Pack> packs, int characterId) {
+        public VirtualInventory(List<Pack> packs, int characterId)
+        {
             Packs = packs;
-            packs.Add(new Pack(characterId, -1, 101));
+            packs.Add(new Pack(characterId, -1, 102));
         }
 
         public List<Pack> Packs = new List<Pack>();
@@ -39,7 +37,7 @@ namespace TidyBags.Models
         {
             DestinationPack = pack;
             DestinationSlot = slot;
-        } 
+        }
         public int DestinationPack;
         public int DestinationSlot;
     }
@@ -63,14 +61,15 @@ namespace TidyBags.Models
         public List<Item> BottomItems;
         public bool IsFull()
         {
-            return Size >= TopItems.Count + BottomItems.Count;
+            return Size <= TopItems.Count + BottomItems.Count + (Slot == -1 ? 1 : 0);
         }
 
-        public List<Item> Items { get { return TopItems.Concat(BottomItems).ToList(); } }
+        public List<Item> Items { get { return TopItems.Concat(BottomItems.AsEnumerable().Reverse()).ToList(); } }
 
         public bool AddItem(Item item, bool putOnBottom)
         {
-            if (TopItems.Count + BottomItems.Count >= Size)
+            //if (TopItems.Count + BottomItems.Count >= Size)
+            if (IsFull())
                 return false;
 
             if (putOnBottom)

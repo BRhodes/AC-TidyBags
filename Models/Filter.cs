@@ -38,6 +38,7 @@ namespace TidyBags.Models
             }
 
             return list.OrderBy(x => x.Key)
+                .ThenBy(x => x.Value.Name)
                 .ThenBy(x => x.Value.Id)
                 //.ThenBy(x => $"{x.Value.Item.Values(LongValueKey.Material, 0)} {x.Value.Item.Name}")
                 .Select(x => x.Value);

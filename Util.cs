@@ -1,10 +1,10 @@
 ﻿using Decal.Adapter;
+using Decal.Adapter.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using TidyBags.Models;
 
 namespace TidyBags
 {
@@ -125,9 +125,19 @@ namespace TidyBags
                 CoreManager.Current.Actions.InvokeChatParser(cmd);
         }
 
-        public static TValue GetValueOrDefault<TKey, TValue>
-    (this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default) =>
-    dictionary.TryGetValue(key, out var ret) ? ret : defaultValue;
+        static public long ComputeInventoryHash(IEnumerable<WorldObject> inventory)
+        {
+            long hash = 0;
+            foreach (var wo in inventory.OrderBy(x => x.Container).ThenBy(x => x.Values(LongValueKey.Slot, -1)))
+            {
+                hash = unchecked(hash * 17 + wo.Id);
+            }
+
+            return hash;
+        }
+
+        public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default) =>
+            dictionary.TryGetValue(key, out var ret) ? ret : defaultValue;
 
         static public List<Item> LongestIncreasingSubsequence<Item>(IEnumerable<Item> items, Func<Item, int> position)
         {
@@ -144,7 +154,8 @@ namespace TidyBags
                 }
                 else
                 {
-                    for (int i = history.Count - 1; i >= 0; i--) {
+                    for (int i = history.Count - 1; i >= 0; i--)
+                    {
                         var story = history[i];
                         if (position(story.Last()) > position(item))
                             continue;
@@ -203,6 +214,21 @@ namespace TidyBags
                 }
             }
             return ans;
+        }
+        
+
+        static public bool LogState()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                WriteToChat("Failed to log current state.");
+            }
+            return false;
         }
     }
 }

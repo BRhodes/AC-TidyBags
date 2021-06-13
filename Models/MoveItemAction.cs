@@ -1,4 +1,4 @@
-﻿namespace TidyBags
+﻿namespace TidyBags.Models
 {
     public class MoveItemAction
     {
